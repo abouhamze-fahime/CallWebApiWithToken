@@ -1,0 +1,95 @@
+﻿@*<link href="~/lib/MD/Site.css" rel="stylesheet" />
+    <link href="~/Sweetalert/sweetalert.css" />*@
+
+<div class="card"  id="ProductDiv">
+    <div class="card-header bg-light ">
+        Travel Policy
+    </div>
+    <div class="card-body card-primary">
+        <div class="row text-left">
+            <button type="submit" onclick="LoadProductBody(0)" class="btn btn-primary float-end">Create new Product</button>
+        </div>
+        <br />
+        <div class="row">
+            <table style=" direction: rtl;" id="tbl_Data" class="table   table-responsive-lg table-bordered">
+                <thead class="table-dark table-secondary">
+                    <tr>
+                        <th>ProductId</th>
+                        <th>ProductName</th>
+                        <th>Description</th>
+                        <th>CategoryId</th>
+                        <th>StockId</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody style="word-wrap: break-word;">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="ProductModal" tabindex="-1" aria-labelledby="ProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="ProductModalContent">
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <link href="~/Utility/SweetAlert/sweetalert.min.js" />
+    <script>
+
+        $(document).ready(function () {
+            LoadData();
+        });
+
+
+        function LoadData() {
+            $.ajax({
+                url: '/Product/GetReport',
+                type: "GET",
+                dataType: "json",
+                success: function (result) {
+                    LoadTable(result);
+                }
+            });
+        }
+
+     
+        function LoadTable(result) {
+            var html = '';
+            for (var i = 0; i < result.length; i++) {
+                html += '<tr id = "Product-' + result[i].productId +'">';
+                html += '<td>' + result[i].productId + '</td>';
+                html += '<td>' + result[i].productName + '</td>';
+                html += '<td>' + result[i].description + '</td>';
+                html += '<td>' + result[i].categoryId + '</td>';
+                html += '<td>' + result[i].stockId + '</td>';
+                html += '<td>' + '<a class="btn btn-warning"  onclick="LoadProductBody(' + result[i].productId + ')">Edit</a> ' + '</td>';
+                html += '<td>' + '<a class="btn btn-danger"  onclick="DeleteProduct(' + result[i].productId + ')">Delete</a>' + '</td>';
+                html += '</tr>'
+            }
+
+            $('#tbl_Data tbody').html(html);
+        }
+
+
+
+        function EditPolicy(id) {
+            window.location.href = '/Product/load-product-modal-body/' + id;
+        }
+
+        function DeletePolicy(id) {
+            window.location.href = '/Product/PrintPolicy/' + id;
+        }
+
+
+    </script>
+}
+

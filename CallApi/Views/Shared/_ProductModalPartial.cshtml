@@ -1,0 +1,50 @@
+﻿@using CallApi.Models
+@model CallApi.Models.ProductRepository.Products
+
+<form id="Productform" asp-action="CreateOrEdit" asp-controller="Product" data-ajax="true" data-ajax-begin="StartLoading()" data-ajax-success="ProductFormSubmited" >
+    <div class="modal-header">
+        <h5 class="modal-title">@((Model.ProductId == 0) ? "Add Product" : $"Edit {Model.ProductName}")</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+
+            <input type="hidden" asp-for="ProductId" />
+            <div class="col-md-6 mb-3">
+                <label>ProductName</label>
+                <input type="text" class="form-control" asp-for="ProductName">
+                <span class="text-danger" asp-validation-for="ProductName"></span>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label>CategoryId</label>
+                <input type="text" class="form-control" asp-for="CategoryId">
+                <span class="text-danger" asp-validation-for="CategoryId"></span>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label>StockId</label>
+                <input type="text" class="form-control" asp-for="StockId">
+                <span class="text-danger" asp-validation-for="StockId"></span>
+                @*<select asp-for="Mobile" class="form-control"  asp-items="@Html.GetEnumSelectList(typeof(Mobile))"></select>*@
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label>Description</label>
+                <input type="text" class="form-control" asp-for="Description">
+            </div>
+
+            @*<div class="col-md-12">
+                <label>Description</label>
+                <textarea class="form-control" rows="5" asp-for="Description"></textarea>
+            </div>*@
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-success">@((Model.ProductId == 0) ? "Create" : "Edit")</button>
+    </div>
+</form>

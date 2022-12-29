@@ -1,0 +1,102 @@
+﻿@model IEnumerable<Customer>
+@{
+    ViewData["Title"] = "CustomerList";
+}
+
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+
+<div class="row">
+    <div class="col-md-12 table-responsive" id="CustomerDiv">
+        <div class="d-flex justify-content-between align-items-center mb-3 mt-3">
+            <h4>Customer List</h4>
+            <button type="button" onclick="LoadCustomerBody(0)" class="btn btn-success" value="Create">Create Customer</button>
+
+        </div>
+       <table id="myTable" class="table table-bordered table-striped">
+            <thead class="table-primary">
+                <tr>
+                    <th>Customer Id</th>
+                    <th>Name</th>
+                    <th>Nationalcode</th>
+                    <th>Mobile</th>
+                    <th>Address</th>
+                    <th>Commands</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr id="Customer-@item.CustomerId">
+                        <td>@item.CustomerId</td>
+                        <td>@item.Name</td>
+                        <td>@item.Nationalcode</td>
+                        <td>@item.Mobile</td>
+                        <td>@item.Address</td>
+                        <td>
+                            <a  onclick="LoadCustomerBody(@item.CustomerId)" class="btn btn-info">Edit</a>
+                            <a onclick="DeleteCustomer(@item.CustomerId)" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="ProductModal" tabindex="-1" aria-labelledby="ProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="ProductModalContent">
+
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    @*<script type="text/javascript" src="/DataTable/jquery.dataTables.min.js"></script>*@
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+            $('.dataTables_length').addClass('bs-select');
+        });
+    </script>
+
+
+    <script>
+        function myFunction() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+
+}
+
+
+
+
+
+
+
+
+
+
