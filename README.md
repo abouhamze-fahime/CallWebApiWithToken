@@ -1,6 +1,6 @@
 # CallWebApiWithToken
-Calling an API via token 
-1-	For user name and password we define an LoginViewModel class with two properties : 
+## Calling an API via token 
+###	For user name and password we define an LoginViewModel class with two properties : 
 
        public class LoginViewModel
        {
@@ -9,16 +9,16 @@ Calling an API via token
            [Required]
            public string Password { get; set; }
        }
-2-	Define GetToken method with LoginViewModel instance as it’s input parameter. Inside it we should instantiate from HttpClient to use it for calling Token and sending username and password through it. 
+###	Define GetToken method with LoginViewModel instance as it’s input parameter. Inside it we should instantiate from HttpClient to use it for calling Token and sending username and password through it. 
          HttpClient Client = new HttpClient()
-3-	 Here we should convert to json LoginViewModel:
+###	 Here we should convert to json LoginViewModel:
              var jsonBody = JsonConvert.SerializeObject(login);
 
-4-	After that we form and build our sending package. In order to do that first thing we use StringContent to make content of our package.
+###	After that we form and build our sending package. In order to do that first thing we use StringContent to make content of our package.
 
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
 
-5-	Finally we send our content via PostAsync method:
+###	Finally we send our content via PostAsync method:
 
        var response = client.PostAsync("/api/Token/GetToken", content).Result;
 
